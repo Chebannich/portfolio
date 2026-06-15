@@ -1,6 +1,8 @@
 "use client"
 
 import { useState } from "react";
+import { motion } from "framer-motion"
+
 import { skills, skillCategories } from "@/data/skills";
 
 export default function Skills () {
@@ -16,11 +18,22 @@ export default function Skills () {
       </div>
       <div className="relative w-full h-[450px]">
         {skills.map((skill) => (
-          <span key={skill.name} 
+          <motion.span 
+                animate={{
+                  x: [0, skill.xAmp, -skill.xAmp, 0],
+                  y: [0, -skill.yAmp, skill.yAmp, 0],
+                }}
+                transition={{
+                  duration: skill.duration,
+                  delay: skill.delay,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                key={skill.name} 
                 style={{position: "absolute", top: skill.top, left: skill.left, fontSize: skill.size}}
                 className={`px-3 py-1 rounded-full transition-opacity ${activeCategory === skill.category ? "bg-sky-500 text-white opacity-100" : activeCategory ? "bg-gray-700 opacity-30" : "bg-gray-700 opacity-100"}`}>
                   {skill.name}
-          </span>
+          </motion.span>
         ))}
       </div>
     </section>
